@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    /* Contact Section */
+    #contact {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #14532D, #0B3D2E, #1E3A3A);
+      color: #fff;
+    }
+
+    .contact-title {
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 50px;
+      font-weight: 700;
+    }
+
+    .contact-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 50px;
+      max-width: 1100px;
+      margin: auto;
+      flex-wrap: wrap;
+    }
+
+    /* Swap left/right */
+    .contact-form {
+      order: 2; /* Form on the right */
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-info {
+      order: 1; /* Info on the left */
+      flex: 1;
+      min-width: 300px;
+      animation: fadeUp 1.2s ease;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .contact-form button {
+      padding: 15px;
+      background: #22C55E;
+      border: none;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .contact-form button:hover {
+      background: #16A34A;
+    }
+
+    .contact-info h3 {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-links a {
+      font-size: 35px;
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    .social-links a:hover {
+      transform: scale(1.2);
+      color: #22C55E;
+    }
+
+    /* Animation */
+    .fade {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 1s ease;
+    }
+
+    .fade.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .contact-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .contact-form,
+      .contact-info {
+        order: initial;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<section id="contact">
+  <h2 class="contact-title fade">Contact Me</h2>
+
+  <div class="contact-container">
+    <!-- Contact Info -->
+    <div class="contact-info fade">
+      <h3>Let's Connect</h3>
+      <p>If you have questions, ideas, or want to collaborate — reach out anytime.</p>
+      <div class="social-links">
+        <a href="#"><i class='bx bxl-facebook'></i></a>
+        <a href="#"><i class='bx bxl-instagram'></i></a>
+        <a href="#"><i class='bx bx-mail-send'></i></a>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <form id="contact-form" class="contact-form fade">
+      <input type="text" name="user_name" placeholder="Your Name" required>
+      <input type="email" name="user_email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+      emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS User ID
+  })();
+
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', function(e){
+      e.preventDefault();
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      .then(() => {
+          alert('Message sent successfully!');
+          form.reset();
+      }, (err) => {
+          alert('Failed to send message: ' + JSON.stringify(err));
+      });
+  });
+
+  // Fade-in on scroll
+  const fadeElements = document.querySelectorAll('.fade');
+  function revealFade() {
+    fadeElements.forEach(el => {
+      const rect = el.getBoundingClientRect().top;
+      if (rect < window.innerHeight - 100) {
+        el.classList.add('show');
+      }
+    });
+  }
+  window.addEventListener('scroll', revealFade);
+  window.addEventListener('load', revealFade);
+</script>
+
+</body>
+</html>
